@@ -9,13 +9,38 @@ export class BlockChain{
     }
     generateGenesisBlock() {
         let block = new Block(0,0,"this is the genesis block",Date.now(),null);
+        this.mine(block)
         // calculate Hash
         block.hash=block.calculateHash(this.hashAlogrithm);
         return block;
     }
+    check(hash,difficulty){
+        for(let i=0;i<difficulty;i++)
+            if(hash.at(i)!="0")
+                return false
+    
+        return true;
+    }
+    mine(block){
+        let timeStart=Date.now();
+       while(true){
+            block.hash= block.calculateHash(this.hashAlogrithm)
+            //console.log(block.hash,block.nonce)
+            if(this.check(block.hash,this.difficulty))
+            {
+                let timeEnd=Date.now();
+                let timeDiff=(timeEnd-timeStart)/1000
+                console.log("hash power = ", block.nonce/timeDiff )
+                return;
+            }
+
+            block.nonce++;
+       }
+       
+    }
     addBlock(block){
         // TODO verification
-        //add
+        // add
         this.blocks.push(block);
     }
     generateBlock(data){
