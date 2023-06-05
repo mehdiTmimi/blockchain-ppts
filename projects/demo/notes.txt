@@ -1,0 +1,26 @@
+- installation:
+npm i -g truffle
+
+- creation du projet
+ truffle init
+
+installation extension : solidity by Juan Blanco
+
+- creer un fichier ticket.sol dans le dossier contracts
+
+- copier le code remis vers ce fichier
+
+==> truffle compile
+
+-migrations: creer un fichier suffixer par 0_ticket_migration
+var MyContract = artifacts.require("MyContract");
+module.exports = function(deployer) {
+  deployer.deploy(MyContract,params between '');
+};
+==> modifer le fichier de configuration truffle-config.js
+   development: {
+     host: "127.0.0.1",     // Localhost (default: none)
+     port: 7545,            // Standard Ethereum port (default: none)
+     network_id: "*",       // Any network (default: none)
+    },
+=>truffle migrate
