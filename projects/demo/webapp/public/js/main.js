@@ -40,6 +40,7 @@ main()
 
 const loadTickets=async ()=>{
   tickets=[];
+  tbodyElement.innerHTML=""
  for(let i=0;i<nbrTicket;i++)
   {
    let ticket= await contract.methods.tickets(i).call()
@@ -72,8 +73,26 @@ const displayTicket = (ticket)=>{
     td3.innerText=ticket.enVente?'disponible':'indisponible'
     td4.innerText=web3js.utils.fromWei(ticket.prix) + " ETH"
 
-    achterBtn.addEventListener('click',()=>{
-
+    achterBtn.addEventListener('click',async ()=>{
+      // realiser une transaction
+      loading.classList.remove('hidden')
+      contract.methods.acheter(ticket.id).send({
+        from:account,
+        value:ticket.prix,
+        gas: 200000,
+        gasPrice:await web3js.eth.getGasPrice()
+      }).then(receipt=>{console.log(receipt);loadTickets()})
+      .catch(error=>console.log('custom erreur',error))
+      .finally(()=>{
+        loading.classList.add('hidden')
+      })
+      // contract.methods.mehodName(param1,param2).send({
+      //   from:sendAdress,
+      //   to: contracrt adress ( facultatif),
+      //   gasPrice:web3js.eth.getGasPrice()
+      //   gas:100000 (estimation),
+      //   value: when u want to send ether with the transaction
+      // })
     })
 }
 
