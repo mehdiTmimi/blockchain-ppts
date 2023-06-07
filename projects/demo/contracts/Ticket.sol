@@ -43,6 +43,16 @@ contract Ticket{
         tickets[ticket.id-1].prix=_price;
     }
 
+    function retirer()external{
+         TicketStr storage ticket=   acheteurs[msg.sender];
+        
+        if(ticket.dateAchat==0)
+            revert('you don t have any ticket');
+        
+        ticket.enVente=false;
+        tickets[ticket.id-1].enVente=false;
+    }
+
 
 
 
