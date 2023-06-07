@@ -13,7 +13,7 @@ struct TicketStr{
 contract Ticket{
     uint256 public nbrTicket;
     TicketStr[] public tickets;
-    address private proprietaire;
+    address public proprietaire; // proprietaire() => getter
     string public nomEvenement;
     uint256 public dateEvenement;
     mapping( address => TicketStr ) public acheteurs;

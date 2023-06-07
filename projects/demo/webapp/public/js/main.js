@@ -36,11 +36,31 @@ let main = async () => {
 
   //4- recuperation des tickets et leurs infos
   await loadTickets();
+  recolterBtn.addEventListener('click',async ()=>{
+      
+    loading.classList.remove('hidden')
+    contract.methods.recolter().send({
+      from:account,
+      gas: 200000,
+      gasPrice: await web3js.eth.getGasPrice()
+    }).then(receipt=>{
+                        alert('done');
+                      //  loadTickets()
+                      })
+    .catch(error => console.log('custom erreur', error))
+    .finally(() => loading.classList.add('hidden'))
+  })
 
 }
 main()
 
 const loadTickets = async () => {
+    isProprietaireContract(account).then(resultat=>{
+      if(resultat)
+        recolterBtn.classList.remove('hidden')
+      else
+        recolterBtn.classList.add('hidden')
+    })
   tickets = [];
   tbodyElement.innerHTML = ""
   for (let i = 0; i < nbrTicket; i++) {
@@ -160,6 +180,10 @@ let alreadyBuyer=async (address)=>{ // true or false
   return res.id!=0
 }
 
+let isProprietaireContract = async (address)=>{
+  let res = await contract.methods.proprietaire().call()
+  return res.toLowerCase()==address.toLowerCase()
+}
 
 
 

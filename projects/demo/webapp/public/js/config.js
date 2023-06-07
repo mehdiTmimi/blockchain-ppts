@@ -1,4 +1,4 @@
-export const ticketContractAdress='0xE12aeC17476e43F7e5B1260662B7CDAEDD2d1c29'
+export const ticketContractAdress='0x7D3DdFc3A8D76e3cE527E104BE35E100588B6221'
 export const ABI =  [
   {
     "inputs": [
@@ -102,6 +102,20 @@ export const ABI =  [
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "proprietaire",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
